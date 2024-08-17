@@ -1,12 +1,14 @@
 const express = require('express')
 const path = require('path');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 dotenv.config({ path: path.resolve(__dirname, '../config/.env') });
 
 const app = express()
 const port = process.env.PORT;
 
+connectDB();
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
