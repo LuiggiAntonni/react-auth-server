@@ -24,15 +24,14 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next(); //if password is not modified
 
   const salt = await bcrypt.genSalt(10);
-  this.password - (await bcrypt.hash(this.password, salt));
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-userSchema.methods.comparePassword = function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password)
+userSchema.methods.comparePassword = async function (candidatePassword) {  
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
 const User = mongoose.model("User", userSchema); //create model as schema
 
 module.exports = User;
-

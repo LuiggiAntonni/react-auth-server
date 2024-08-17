@@ -1,7 +1,10 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+const bodyParser = require('body-parser');
 const connectDB = require("./config/db");
+const authRoutes = require('./routes/auth');
+const authMiddleWare = require('./middleware/authMiddleware')
 
 dotenv.config({ path: path.resolve(__dirname, "../config/.env") });
 
@@ -10,8 +13,16 @@ const port = process.env.PORT;
 
 connectDB();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//Routes
+
+app.use('/api/auth', authRoutes);
+
+app.get('/main', authMiddleWare, (req, res) => {
+    res.send('foi')
+})
 
 //In case of error
 app.use((err, req, res, next) => {
