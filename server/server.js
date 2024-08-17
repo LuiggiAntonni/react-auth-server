@@ -20,9 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 
-app.get('/main', authMiddleWare, (req, res) => {
-    res.send('foi')
-})
 
 //In case of error
 app.use((err, req, res, next) => {
