@@ -6,9 +6,8 @@ exports.register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const finalUsername = username || "usernameUndefined"; //default username, username is not required
-    console.log({ username, email, password });
     
-    const user = new User({ finalUsername, email, password });
+    const user = new User({ username: finalUsername, email: email, password: password });
     
     await user.save();
     res.status(201).json({ message: "User registered successfully" });

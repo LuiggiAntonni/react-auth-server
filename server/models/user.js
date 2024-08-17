@@ -5,15 +5,19 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      allowNull: true,
+      maxLength: 30
     },
     email: {
       type: String,
+      allowNull: false,
       required: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
+      allowNull: false
     },
   },
   { timestamps: true } //time created and last update time
