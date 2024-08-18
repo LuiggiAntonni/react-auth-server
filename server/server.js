@@ -1,10 +1,11 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
-const authRoutes = require('./routes/auth');
-const authMiddleWare = require('./middleware/authMiddleware')
+const authRoutes = require("./routes/auth");
+const cors = require("cors");
+const authMiddleWare = require("./middleware/authMiddleware");
 
 dotenv.config({ path: path.resolve(__dirname, "../config/.env") });
 
@@ -16,10 +17,21 @@ connectDB();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const corsOptions = {
+  origin: process.env.FRONT_PORT, //frontend url
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, //cookies
+};
+
+app.use(cors(corsOptions));
+
+app.get('/', (req, res, next) => {
+  res.send(`Hello, You Are Inside The Backend Server, Check And Access The Backend Port`)
+})
+
 //Routes
-
-app.use('/api/auth', authRoutes);
-
+app.use("/api/auth", authRoutes);
 
 //In case of error
 app.use((err, req, res, next) => {
