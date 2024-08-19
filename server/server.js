@@ -17,6 +17,7 @@ connectDB();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 const corsOptions = {
   origin: process.env.FRONT_PORT, //frontend url
   methods: ["GET", "POST", "PUT", "DELETE"],

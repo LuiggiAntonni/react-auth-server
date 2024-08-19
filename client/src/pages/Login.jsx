@@ -3,41 +3,43 @@ import httpClient from "../services/httpClient";
 import "../styles/login.css"
 
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setName] = useState(""); // Apenas para o Sign Up
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
+    setError("");
     e.preventDefault();
-    const loginData = { email, password };
+    const data = isLogin ? { email, password } : { username, email, password };
 
     try {
-      const response = await httpClient.post('/api/auth/login', loginData)
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const response = await httpClient.post(endpoint, data)
         .catch(err => {
-          // Handle error here
           if (err.response) {
-            // If the error response has a status 401
-            if (err.response.status === 401) {              
+            if (err.response.status === 401 || err.response.status === 400) {
               setError(err.response.data.error);
             } else {
-              // Handle other error statuses
-              setError(err.response.data.error || 'Login error, please try again.');
+              setError(err.response.data.error || 'Error, please try again.');
             }
           } else if (err.request) {
-            // Request was made but no response received
-            setError(err.response.data.error || 'Request error. Please try again later.');
+            setError('Request error. Please try again later.');
           } else {
-            // Something happened in setting up the request
             setError('An unexpected error occurred. Please try again later.');
           }
-          // Rethrow the error so the try/catch block can handle it as well
           throw err;
         });
-  
-      // Check if the status is 200
+
       if (response.status === 200) {
         localStorage.setItem('authToken', response.data.token);
         window.location.href = '/me';
+      }
+
+      if (response.status === 201) {
+        localStorage.setItem('authToken', response.data.token);
+        window.location.href = '/me?welcome=true';
       }
     } catch (err) {
       // Additional error handling if needed
@@ -46,8 +48,21 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Login Page</h2>
+      <h2>{isLogin ? "Login" : "Sign Up"} Page</h2>
       <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <div>
+            <label htmlFor="username">username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setName(e.target.value)}
+              required={!isLogin}
+              placeholder="Your Name"
+            />
+          </div>
+        )}
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -56,7 +71,7 @@ const Login = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="email@exemple.com"
+            placeholder="email@example.com"
           />
         </div>
         <div>
@@ -67,12 +82,15 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Passoword"
+            placeholder="Password"
           />
         </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+        <button type="submit">{isLogin ? "Login" : "Sign Up"}</button>
       </form>
+      <button className="toggle-button" onClick={() => {setIsLogin(!isLogin); setError("");}}>
+        {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+      </button>
     </div>
   );
 };
