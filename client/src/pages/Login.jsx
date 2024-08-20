@@ -33,12 +33,12 @@ const Login = () => {
         });
 
       if (response.status === 200) {
-        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('user', response.data.token);
         window.location.href = '/me';
       }
 
       if (response.status === 201) {
-        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('user', response.data.token);
         window.location.href = '/me?welcome=true';
       }
     } catch (err) {

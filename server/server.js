@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const cors = require("cors");
-const authMiddleWare = require("./middleware/authMiddleware");
+const meRoutes = require("./routes/me");
 
 dotenv.config({ path: path.resolve(__dirname, "../config/.env") });
 
@@ -33,6 +33,7 @@ app.get('/', (req, res, next) => {
 
 //Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/me", meRoutes);
 
 //In case of error
 app.use((err, req, res, next) => {

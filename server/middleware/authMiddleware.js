@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
+  console.log(req.headers);
+  
   // Extract the Authorization header from the request
   const token = req.headers.authorization
     // Use optional chaining to safely access the Authorization header
