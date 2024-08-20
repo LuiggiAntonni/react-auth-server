@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const tokenUtils = require("../utils/tokenUtils");
 
 // register new user
 exports.register = async (req, res) => {
@@ -22,11 +23,11 @@ exports.register = async (req, res) => {
 
     await user.save();
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
+    const token = tokenUtils.generateToken(user.id);
 
-    res.status(201).json({ message: "User registered successfully", token: token});
+    res
+      .status(201)
+      .json({ message: "User registered successfully", token: token });
   } catch (error) {
     console.error("Registration Error: ", error);
     res.status(500).json({
@@ -47,9 +48,7 @@ exports.login = async (req, res) => {
         .json({ error: "The email or password you entered is incorrect." });
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
+    const token = tokenUtils.generateToken(user.id);
 
     res.json({ token });
   } catch (error) {
