@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-import '../styles/header.css'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ReactComponent as LogooutIcon } from "../assets/logoutIcon.svg";
+import "../styles/header.css";
 
 function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   useEffect(() => {
     // Corrigindo o problema de parsing do JSON
     try {
-      const user = localStorage.getItem('user');
+      const user = localStorage.getItem("user");
       if (user) {
         setIsAuthenticated(true);
       } else {
@@ -20,21 +20,18 @@ function Header() {
     }
   }, []);
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setIsAuthenticated(false);
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
   return (
     <header>
       <nav className="nav-header">
-      <Link to="/" >Home</Link>
+        <Link to="/">Home</Link>
         <ul>
-          
-            
-          
           {isAuthenticated ? (
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}><LogooutIcon /> Logout</button>
             </li>
           ) : (
             <li>

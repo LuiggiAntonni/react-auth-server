@@ -1,20 +1,9 @@
-body {
-  background-color: #1a1a1a;
-  font-family: "Arial", sans-serif;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
 .login-container {
   background: linear-gradient(135deg, #0d0d0d, #3a3a3a);
   border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
   padding: 40px;
-  width: 300px;
+  width: 21em;
   text-align: center;
   transition: transform 0.3s ease;
 }
@@ -23,6 +12,7 @@ body {
   margin-bottom: 20px;
   font-size: 24px;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 form div {
@@ -56,6 +46,40 @@ input:focus {
   border: 1px solid #00bfff;
 }
 
+.inputs-forms {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+}
+
+.icon-forms {
+  width: 12%;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  height: 100%;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password svg path {
+  fill: #b5b5b5;
+}
+
 .toggle-button {
   background: none;
   color: aliceblue;
@@ -76,14 +100,23 @@ button[type="submit"] {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button:hover {
+button[type="submit"]:hover {
   background-color: #0099cc;
   transform: scale(1.05);
 }
 
-button:active {
+button[type="submit"]:active {
   background-color: #0077b3;
   transform: scale(0.95);
+}
+
+.toggle-button {
+  margin-top: 15px;
+}
+
+.toggle-button:hover {
+  color: #bde7fc;
+  text-decoration: underline;
 }
 
 .error {
