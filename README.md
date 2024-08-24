@@ -32,7 +32,26 @@ This project is a complete example of a full-stack application, with the main fo
 
 ## 🛠️ Installation and Setup
 
+### Project Structure
+```bash
+react-auth-server/
+│
+├── client/            # Contains the frontend code (React)
+│
+├── config/            # Contains the environment variables configuration
+│   └── .env           # Environment variables configuration file for the backend
+│
+├── server/            # Contains the backend code (Node.js/Express)
+│
+├── .gitignore         # File to specify untracked files for Git
+├── LICENSE            # License file for the project
+└── README.md          # Project documentation
+```
+
 Follow the steps below to set up and start the application on your local machine.
+
+
+
 
 ### 1. Cloning the Repository
 
@@ -46,25 +65,32 @@ cd react-auth-server
 Navigate to the backend folder:
 
 ```bash
-cd backend
+cd server
 ```
 Install the necessary dependencies:
 
 ```bash
 npm install
 ```
-Create a .env file at the root of the backend folder with the following environment variables   
+Create a .env file inside the 'config' folder with the following environment variables  
 
+```bash
+cd ..
+mkdir config
+```
+Create a .env file
 ```bash
 PORT=5000
 MONGO_URI=url
 JWT_SECRET=secret
 JWT_EXPIRES_IN=3h
 FRONT_PORT=http://localhost:3000
+REACT_APP_API_URL=http://localhost:5000
 ```
 Start the backend server:
 
 ```bash
+cd server
 npm start
 ```
 The backend will be running at http://localhost:5000.
@@ -73,7 +99,7 @@ The backend will be running at http://localhost:5000.
 
 Navigate to the frontend folder:
 ```bash
-cd ../frontend
+cd ../client
 ```
 
 Install the dependencies:
@@ -85,10 +111,6 @@ Start the frontend server:
 
 ```bash
 npm start
-```
-
-```bash
-npm install
 ```
 The frontend will be available at http://localhost:3000.
 
